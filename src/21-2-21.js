@@ -1,9 +1,10 @@
 //1. 编写一个方法，该方法接收两个参数，分别为 k 和 一个无序的纯数字数组。
 // 该方法在执行后，会返回数组中第 k 大的数字。特别注意，如果数组中，有两位数值一样的数字，同数值数字排名并列。
 // 如 [3,1,3,2,5,4,5] 中，第 1 大的数字为 5，第2大的数字为 4，第5大的数字为 1。
-function proOne(k, nums){
-    return Array.from(new Set(nums.sort((a,b) => a - b)))[k-1]
+function proOne (k, nums) {
+  return Array.from(new Set(nums.sort((a, b) => a - b)))[k - 1]
 }
+
 //2. __proto__ 和 prototype 之前有什么关系？
 // 每个对象都拥有__proto__,而prototype是构造函数对象才拥有的属性对象
 // 每个对象的__proto__都会指向构造他的构造函数的prototype(原型)属性，其中包含了这个对象类共有的属性和方法
@@ -17,12 +18,30 @@ function proOne(k, nums){
 // call和apply绑定完后会立即执行,bind不会,它会返回一个绑定后的函数
 // call和apply的区别就是参数的传递方式,apply可以以数组的形式传递多个参数
 // bind的实现方式
-Function.prototype.my_bind = function (arg, ...args){
-    return () => this.my_apply(arg, ...args)
+Function.prototype.my_bind = function (arg, ...args) {
+  return () => this.my_apply(arg, ...args)
 }
-Function.prototype.my_apply = function (arg, ...args){
-    arg.fn = this
-    let value = args.length?arg.fn(...args):args.fn()
-    delete arg.fn
-    return value
+Function.prototype.my_apply = function (arg, ...args) {
+  if (typeof this !== 'function') {
+    throw new TypeError('Error')
+  }
+  arg.fn = this
+  let value = args.length ? arg.fn(...args) : args.fn()
+  delete arg.fn
+  return value
 }
+
+//4.js中基础数据类型有哪几种?了解包装对象么？
+// number
+// BigInt
+// string
+// boolean
+// undefined
+// null
+// symbol
+// js提供了三个包装对象 Number Boolean String，可以用来初始化值
+// 当我们对一些基本数据类型的值去调用属性和方法时，
+// 浏览器会临时使用包装类将其转换为对象，然后在调用对象的属性和方法，调用完以后，在将其转换为基本数据类型。
+//5.如何判断this？箭头函数的this是什么？
+// 正常函数的this是使用时的对象
+// 箭头函数的this是定义时的作用域环境对象
