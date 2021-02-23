@@ -12,6 +12,25 @@
 // 在ES5之后，JavaScript引入了Promise，这样，不需要浏览器，JavaScript引擎自身也能够发起异步任务了。
 
 // 4.什么是回调?回调使用中存在什么问题?
-
-
-// 5.Promise.allSettled 了解吗？动手实现一下 Promise.allSettled?
+// 回调函数是一种异步任务的解决方案,当异步任务获取到结果之后，会通过回调来返回结果并进行一些处理操作
+// 当一个异步任务依赖上一个异步任务的结果时,会出现回调嵌套回调的情况,多层之后代码就变得冗余丑陋,难以理解
+//
+// 5.Promise.allSettled 了解吗？动手实现一下 Promise.allSettled?
+Promise.all_Settled = function (promises) {
+    return new Promise(resolve => {
+        const data = [], len = promises.length;
+        let count = len;
+        for (let i = 0; i < len; i += 1) {
+            const promise = promises[i];
+            promise.then(res => {
+                data[i] = {status: 'fulfilled', value: res};
+            }, error => {
+                data[i] = {status: 'rejected', reason: error};
+            }).finally(() => { // promise has been settled
+                if (!--count) {
+                    resolve(data);
+                }
+            });
+        }
+    });
+}
