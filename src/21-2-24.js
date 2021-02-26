@@ -26,3 +26,7 @@
 // componentDidUpdate() {}
 // 渲染组件函数
 // render() {}
+
+// 1. 说一下React Hooks在平时开发中需要注意的问题和原因?
+
+// 2. React 的 setState 方法是异步还是同步？
